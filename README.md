@@ -1,5 +1,4 @@
-# event-listener
-
+# event-sensor
 
 ```sh
 cd hasura
