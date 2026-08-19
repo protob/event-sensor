@@ -204,6 +204,7 @@ async function submit() {
           type="text"
           :placeholder="isFestival ? 'e.g. Open’er Festival 2007' : 'Event name'"
           :class="field"
+          data-testid="manual-name"
         />
         <Mono v-if="isFestival" size="9" class="text-faint">
           The festival is the event — add the artists you saw (with day / venue) below.
@@ -214,14 +215,21 @@ async function submit() {
         <label class="flex flex-col gap-1 flex-1">
           <Mono size="9" class="text-muted uppercase">Kind</Mono>
           <select v-model="form.kind" :class="field">
-            <option v-for="k in KINDS" :key="k" :value="k">{{ k }}</option>
+            <option
+              v-for="k in KINDS"
+              :key="k"
+              :value="k"
+              :data-testid="k === 'festival' ? 'manual-kind-festival' : undefined"
+            >
+              {{ k }}
+            </option>
           </select>
         </label>
         <label class="flex flex-col gap-1 flex-1">
           <Mono size="9" class="text-muted uppercase">{{
             isFestival ? "Start date * (YYYY-MM-DD)" : "Date * (YYYY-MM-DD)"
           }}</Mono>
-          <DateField v-model="form.date" :class="field" />
+          <DateField v-model="form.date" :class="field" data-testid="manual-start-date" />
         </label>
       </div>
 
@@ -244,7 +252,7 @@ async function submit() {
           <Mono size="9" class="text-muted uppercase">{{
             isFestival ? "End date (last day, YYYY-MM-DD)" : "End date (optional, YYYY-MM-DD)"
           }}</Mono>
-          <DateField v-model="form.endDate" :class="field" />
+          <DateField v-model="form.endDate" :class="field" data-testid="manual-end-date" />
         </label>
       </div>
 
@@ -258,15 +266,21 @@ async function submit() {
             type="text"
             :placeholder="isFestival ? 'Venue name (optional)' : 'Venue name'"
             :class="field"
+            data-testid="manual-venue-name"
           />
         </label>
         <label class="flex flex-col gap-1">
           <Mono size="9" class="text-muted uppercase">City</Mono>
-          <input v-model="form.city" type="text" :class="field" />
+          <input v-model="form.city" type="text" :class="field" data-testid="manual-venue-city" />
         </label>
         <label class="flex flex-col gap-1">
           <Mono size="9" class="text-muted uppercase">Country</Mono>
-          <input v-model="form.country" type="text" :class="field" />
+          <input
+            v-model="form.country"
+            type="text"
+            :class="field"
+            data-testid="manual-venue-country"
+          />
         </label>
         <label class="flex flex-col gap-1">
           <Mono size="9" class="text-muted uppercase">Country code</Mono>
@@ -296,17 +310,17 @@ async function submit() {
         </Mono>
         <select v-model="form.status" :class="field">
           <option value="">Auto ({{ isPastDate ? "attended" : "interested" }})</option>
-          <option value="interested">interested</option>
-          <option value="going">going</option>
-          <option value="attended">attended</option>
-          <option value="missed">missed</option>
+          <option value="interested" data-testid="manual-status-interested">interested</option>
+          <option value="going" data-testid="manual-status-going">going</option>
+          <option value="attended" data-testid="manual-status-attended">attended</option>
+          <option value="missed" data-testid="manual-status-missed">missed</option>
         </select>
       </label>
     </div>
 
     <div class="flex justify-end gap-2 px-4 h-12 items-center border-t border-line">
       <Btn tone="neutral" size="sm" @click="emit('close')">Cancel</Btn>
-      <Btn tone="accent" size="sm" :loading="submitting" @click="submit">
+      <Btn tone="accent" size="sm" :loading="submitting" data-testid="manual-save" @click="submit">
         {{ isEditing ? "Save changes" : "Add event" }}
       </Btn>
     </div>

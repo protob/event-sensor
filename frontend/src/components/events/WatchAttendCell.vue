@@ -23,6 +23,7 @@ const emit = defineEmits<{ interested: []; going: [] }>();
       tone="accent"
       size="sm"
       :title="interested ? 'Interested' : 'Not interested'"
+      data-testid="claim-interested"
       @click="emit('interested')"
     >
       <IconInterested v-if="interested" class="h-4 w-4" />
@@ -33,6 +34,7 @@ const emit = defineEmits<{ interested: []; going: [] }>();
       tone="go"
       size="sm"
       :title="going ? 'Going' : 'Not going'"
+      data-testid="claim-going"
       @click="emit('going')"
     >
       <IconCheck v-if="going" class="h-4 w-4" />

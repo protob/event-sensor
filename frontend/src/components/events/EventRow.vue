@@ -89,6 +89,7 @@ const lineupNames = computed(() => (view.value.lineup ?? []).map((l) => l.artist
 <template>
   <div
     class="border-b border-line"
+    :data-testid="'event-row-' + event.id"
     :class="[
       checked ? 'ring-1 ring-inset ring-accent-bright/40' : '',
       selected
@@ -113,6 +114,7 @@ const lineupNames = computed(() => (view.value.lineup ?? []).map((l) => l.artist
           class="accent-accent-bright cursor-pointer"
           :checked="checked"
           :title="'Select (Shift-click for range)'"
+          data-testid="event-select"
           @click="emit('select', $event)"
         />
       </div>
@@ -247,7 +249,7 @@ const lineupNames = computed(() => (view.value.lineup ?? []).map((l) => l.artist
           </div>
         </div>
         <div class="flex gap-2 mt-2.5">
-          <RouterLink :to="`/events/${event.id}`">
+          <RouterLink :to="`/events/${event.id}`" data-testid="event-open">
             <span
               class="inline-flex items-center px-3 py-1 text-label font-mono rounded-sm border bg-accent-chip border-accent-chip-border text-accent-text cursor-pointer"
             >

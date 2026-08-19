@@ -181,7 +181,12 @@ onMounted(load);
               <Tag v-else :color="catColor">{{ ev.kind }}</Tag>
               <EventLifecycleTag :event="ev" show-past />
             </div>
-            <h1 class="text-2xl font-bold text-heading leading-tight">{{ ev.name }}</h1>
+            <h1
+              class="text-2xl font-bold text-heading leading-tight"
+              data-testid="event-detail-name"
+            >
+              {{ ev.name }}
+            </h1>
             <div v-if="ev.venue" class="mt-1 flex items-center gap-1.5">
               <Flag v-if="ev.venue.country_code" :code="ev.venue.country_code" :w="18" />
               <Mono size="11" class="text-muted">{{ ev.venue.city }}, {{ ev.venue.country }}</Mono>
@@ -194,7 +199,9 @@ onMounted(load);
             <Tag v-else :color="catColor">{{ ev.kind }}</Tag>
             <EventLifecycleTag :event="ev" show-past />
           </div>
-          <h1 class="text-2xl font-bold text-heading leading-tight">{{ ev.name }}</h1>
+          <h1 class="text-2xl font-bold text-heading leading-tight" data-testid="event-detail-name">
+            {{ ev.name }}
+          </h1>
           <div v-if="ev.venue" class="mt-1 flex items-center gap-1.5">
             <Flag v-if="ev.venue.country_code" :code="ev.venue.country_code" :w="18" />
             <Mono size="11" class="text-muted">{{ ev.venue.city }}, {{ ev.venue.country }}</Mono>

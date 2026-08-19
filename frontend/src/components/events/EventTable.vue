@@ -61,7 +61,7 @@ async function remove(ev: Event) {
 </script>
 
 <template>
-  <div class="flex flex-col min-h-0 flex-1">
+  <div class="flex flex-col min-h-0 flex-1" data-testid="events-table">
     <!-- column headers -->
     <div
       class="grid items-center px-gutter h-[30px] border-b border-line bg-surface-2 shrink-0"
@@ -84,6 +84,7 @@ async function remove(ev: Event) {
       <div
         v-else-if="events.length === 0"
         class="flex flex-col items-center justify-center h-40 gap-1 text-center px-4"
+        data-testid="events-empty"
       >
         <Mono size="xs" class="text-muted">
           {{ emptyMessage || "No events. Add an artist and fetch from Ticketmaster." }}

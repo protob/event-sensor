@@ -22,6 +22,7 @@ const { isFestival, title, kindBadge, setStatus, saveNote, unclaim } = useLibrar
 <template>
   <div
     class="border-b border-line px-gutter py-2 hover:bg-surface-2"
+    :data-testid="'library-row-' + event.id"
     :class="checked ? 'bg-accent-chip/40 ring-1 ring-inset ring-accent-bright/40' : ''"
   >
     <div class="flex items-center gap-2">

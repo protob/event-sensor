@@ -130,6 +130,7 @@ useEventListener(window, "scroll", onReflow, { capture: true });
             type="button"
             class="w-full flex items-center gap-2 pl-2 pr-3 py-1 text-xs font-mono text-left hover:bg-surface-3"
             :class="isOn(c.code) ? 'text-accent-text' : 'text-body'"
+            :data-testid="'country-filter-' + c.code"
             @click="ui.toggleCountry(c.code)"
           >
             <span

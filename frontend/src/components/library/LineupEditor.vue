@@ -142,6 +142,7 @@ const focusedArtist = computed(() => (focused.value != null ? artists.value[focu
         rows="5"
         placeholder="Artist 1&#10;Artist 2, 2007-07-06, Tent Stage&#10;Artist 3"
         :class="[field, 'w-full resize-y']"
+        data-testid="lineup-csv"
       />
       <div class="flex justify-end gap-2">
         <button class="font-mono text-label text-faint hover:text-body" @click="showPaste = false">
@@ -150,6 +151,7 @@ const focusedArtist = computed(() => (focused.value != null ? artists.value[focu
         <button
           class="font-mono text-label text-accent-text hover:brightness-125 disabled:opacity-40"
           :disabled="!pasteText.trim()"
+          data-testid="lineup-csv-apply"
           @click="applyPaste"
         >
           append {{ pasteCount }} artists →
@@ -167,7 +169,7 @@ const focusedArtist = computed(() => (focused.value != null ? artists.value[focu
       </Mono>
       <template v-if="isFestival">
         <span class="flex items-center gap-1">
-          <DateField v-model="fillDay" :class="[field, 'w-32']" />
+          <DateField v-model="fillDay" :class="[field, 'w-32']" data-testid="lineup-fill-day" />
           <button
             class="font-mono text-meta text-accent-text hover:brightness-125"
             @click="fillDownDay"
@@ -176,7 +178,13 @@ const focusedArtist = computed(() => (focused.value != null ? artists.value[focu
           </button>
         </span>
         <span class="flex items-center gap-1">
-          <input v-model="fillVenue" type="text" placeholder="venue" :class="[field, 'w-28']" />
+          <input
+            v-model="fillVenue"
+            type="text"
+            placeholder="venue"
+            :class="[field, 'w-28']"
+            data-testid="lineup-fill-venue"
+          />
           <button
             class="font-mono text-meta text-accent-text hover:brightness-125"
             @click="fillDownVenue"
@@ -215,6 +223,7 @@ const focusedArtist = computed(() => (focused.value != null ? artists.value[focu
           v-for="(artist, i) in artists"
           :key="i"
           class="flex items-center gap-2 px-2 py-1 border-b border-line/60 cursor-pointer"
+          :data-testid="'lineup-act-' + i"
           :class="[
             focused === i
               ? 'bg-surface-sel'
@@ -298,7 +307,12 @@ const focusedArtist = computed(() => (focused.value != null ? artists.value[focu
 
     <!-- NON-FESTIVAL: compact single-column rows -->
     <template v-else-if="!isFestival">
-      <div v-for="(artist, i) in artists" :key="i" class="flex gap-2 items-center">
+      <div
+        v-for="(artist, i) in artists"
+        :key="i"
+        class="flex gap-2 items-center"
+        :data-testid="'lineup-act-' + i"
+      >
         <input
           type="checkbox"
           class="accent-accent-bright shrink-0"

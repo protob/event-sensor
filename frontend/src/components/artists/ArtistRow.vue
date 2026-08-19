@@ -32,6 +32,7 @@ const ui = useUiStore();
 <template>
   <div
     class="group flex items-center px-gutter py-2.5 border-b border-line gap-3"
+    :data-testid="'artist-row-' + artist.id"
     :class="[
       selected
         ? 'bg-accent-chip/40 ring-1 ring-inset ring-accent-bright/40'
@@ -76,7 +77,12 @@ const ui = useUiStore();
     >
       {{ artist.fetch_mode === "manual" ? "manual" : "auto" }}
     </button>
-    <IconButton tone="accent" title="Fetch events" @click="emit('fetch')">
+    <IconButton
+      tone="accent"
+      title="Fetch events"
+      data-testid="artist-fetch"
+      @click="emit('fetch')"
+    >
       <IconFetch class="h-4 w-4" :class="fetching ? 'animate-spin' : ''" />
     </IconButton>
     <!-- touch:ml-2 keeps the 44px hit areas clear of their left neighbour's tap zone. -->

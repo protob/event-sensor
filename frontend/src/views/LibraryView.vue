@@ -96,6 +96,7 @@ onMounted(refresh);
         :key="t.key"
         :tone="tab === t.key ? (t.key === 'going' ? 'go' : 'accent') : 'neutral'"
         :active="tab === t.key"
+        :data-testid="'library-tab-' + t.key"
         @click="tab = t.key"
       >
         {{ t.label }} ({{ t.count() }})
@@ -113,7 +114,14 @@ onMounted(refresh);
         ><IconGrid class="h-3.5 w-3.5"
       /></Pill>
 
-      <Pill tone="accent" :active="true" class="ml-auto" @click="openAdd">+ Add event</Pill>
+      <Pill
+        tone="accent"
+        :active="true"
+        class="ml-auto"
+        data-testid="library-add-event"
+        @click="openAdd"
+        >+ Add event</Pill
+      >
     </div>
 
     <!-- "did you go?" nudge -->
@@ -124,6 +132,7 @@ onMounted(refresh);
       <div
         v-if="!list.length"
         class="flex flex-col items-center justify-center h-40 px-4 text-center"
+        data-testid="library-empty"
       >
         <Mono size="xs" class="text-muted">{{ emptyMessage }}</Mono>
       </div>

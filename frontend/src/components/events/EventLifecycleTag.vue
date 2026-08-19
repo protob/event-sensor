@@ -10,7 +10,22 @@ const props = withDefaults(defineProps<{ event: Event; showPast?: boolean }>(), 
 </script>
 
 <template>
-  <Tag v-if="props.event.listing_state === 'cancelled'" color="#ef4444">CANCELLED</Tag>
-  <Tag v-else-if="props.event.listing_state === 'delisted'" color="#71717a">NO LONGER LISTED</Tag>
-  <Tag v-else-if="props.showPast && props.event.is_past" color="#52525b">PAST</Tag>
+  <Tag
+    v-if="props.event.listing_state === 'cancelled'"
+    color="#ef4444"
+    data-testid="event-lifecycle"
+    >CANCELLED</Tag
+  >
+  <Tag
+    v-else-if="props.event.listing_state === 'delisted'"
+    color="#71717a"
+    data-testid="event-lifecycle"
+    >NO LONGER LISTED</Tag
+  >
+  <Tag
+    v-else-if="props.showPast && props.event.is_past"
+    color="#52525b"
+    data-testid="event-lifecycle"
+    >PAST</Tag
+  >
 </template>

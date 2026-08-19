@@ -27,7 +27,13 @@ async function onSubmit() {
 <template>
   <AuthCard title="Login">
     <form class="flex flex-col gap-4" @submit.prevent="onSubmit">
-      <TextField v-model="username" label="Username" autocomplete="username" required />
+      <TextField
+        v-model="username"
+        label="Username"
+        autocomplete="username"
+        required
+        data-testid="login-username"
+      />
       <TextField
         v-model="password"
         label="Password"
@@ -35,9 +41,16 @@ async function onSubmit() {
         autocomplete="current-password"
         revealable
         required
+        data-testid="login-password"
       />
-      <p v-if="error" class="text-xs text-danger">{{ error }}</p>
-      <Btn type="submit" tone="accent" :loading="loading" class="w-full justify-center">
+      <p v-if="error" class="text-xs text-danger" data-testid="login-error">{{ error }}</p>
+      <Btn
+        type="submit"
+        tone="accent"
+        :loading="loading"
+        class="w-full justify-center"
+        data-testid="login-submit"
+      >
         {{ loading ? "Logging in…" : "Login" }}
       </Btn>
       <div class="text-center text-xs text-muted">

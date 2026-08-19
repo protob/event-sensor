@@ -31,6 +31,7 @@ const typeIcons = {
           :key="toast.id"
           class="pointer-events-auto flex min-w-72 items-center gap-3 rounded-lg border px-4 py-3 shadow-lg"
           :class="typeClasses[toast.type]"
+          data-testid="toast"
         >
           <component :is="typeIcons[toast.type]" class="h-5 w-5" />
           <span class="flex-1 text-sm font-medium">{{ toast.message }}</span>

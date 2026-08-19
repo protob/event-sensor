@@ -71,8 +71,12 @@ const itemCls =
       v-if="count > 0"
       ref="root"
       class="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 px-3 py-2 rounded-md border border-line-2 bg-surface shadow-xl shadow-black/30 font-mono"
+      data-testid="bulk-bar"
     >
-      <span class="text-xs text-heading font-semibold tabular-nums whitespace-nowrap">
+      <span
+        class="text-xs text-heading font-semibold tabular-nums whitespace-nowrap"
+        data-testid="bulk-count"
+      >
         {{ count }} selected
       </span>
       <span class="w-px h-5 bg-line" />
@@ -84,12 +88,13 @@ const itemCls =
             v-for="s in STATUSES"
             :key="s.value || 'unclaim'"
             :class="itemCls"
+            :data-testid="'bulk-status-' + (s.value || 'unclaim')"
             @click="pick(() => emit('set-status', s.value))"
           >
             {{ s.label }}
           </button>
         </DropdownMenu>
-        <Btn size="sm" tone="danger" @click="emit('delete')">Delete</Btn>
+        <Btn size="sm" tone="danger" data-testid="bulk-delete" @click="emit('delete')">Delete</Btn>
       </template>
 
       <!-- artists actions -->
@@ -159,6 +164,7 @@ const itemCls =
       <button
         class="text-meta text-faint hover:text-muted whitespace-nowrap"
         title="Clear selection (Esc)"
+        data-testid="bulk-clear"
         @click="emit('clear')"
       >
         Esc to clear

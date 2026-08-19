@@ -187,7 +187,13 @@ onMounted(async () => {
               the server default.
             </Mono>
             <div>
-              <Btn tone="accent" size="md" :loading="apiKeySaving" @click="saveApiKey">
+              <Btn
+                tone="accent"
+                size="md"
+                :loading="apiKeySaving"
+                data-testid="settings-save"
+                @click="saveApiKey"
+              >
                 Save Key
               </Btn>
             </div>
@@ -226,6 +232,7 @@ onMounted(async () => {
                   ? 'bg-accent-strong border-accent-bright text-accent-text'
                   : 'bg-surface-2 border-line-2 text-muted hover:text-body'
               "
+              :data-testid="'settings-region-' + code"
               @click="toggleCode(code)"
             >
               <Flag :code="code" :w="16" />

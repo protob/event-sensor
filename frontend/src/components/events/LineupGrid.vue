@@ -25,7 +25,7 @@ function entityArtist(name: string): Artist | null {
 </script>
 
 <template>
-  <div>
+  <div data-testid="event-detail-lineup">
     <div class="flex items-baseline gap-2.5 mb-3.5">
       <Mono size="sm" class="text-body font-semibold tracking-wide uppercase">{{ heading }}</Mono>
       <Mono size="10" class="text-ghost">{{ names.length }} artists</Mono>

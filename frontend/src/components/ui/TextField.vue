@@ -17,6 +17,10 @@ withDefaults(
 
 const model = defineModel<string>({ default: "" });
 const show = ref(false);
+
+// The root is the <label>; without this a data-testid or an id set by the caller would
+// land there instead of on the field it names.
+defineOptions({ inheritAttrs: false });
 </script>
 
 <template>
@@ -27,6 +31,7 @@ const show = ref(false);
     <div class="relative">
       <input
         v-model="model"
+        v-bind="$attrs"
         :type="revealable && show ? 'text' : type"
         :placeholder="placeholder"
         :autocomplete="autocomplete"

@@ -78,6 +78,7 @@ async function handleLogout() {
       :to="item.path"
       :title="item.label"
       :aria-label="item.label"
+      :data-testid="'nav-' + item.name"
       class="w-full h-[46px] flex items-center justify-center border-l-2 transition-colors"
       :class="
         isActive(item.name)
@@ -95,6 +96,7 @@ async function handleLogout() {
           <button
             class="h-9 w-9 rounded-full bg-accent-chip border border-accent-chip-border text-accent-text text-label font-mono font-semibold flex items-center justify-center hover:brightness-125"
             :title="user?.username"
+            data-testid="user-menu"
             @click="popoverOpen = !popoverOpen"
           >
             {{ initials }}
@@ -116,6 +118,7 @@ async function handleLogout() {
             </button>
             <button
               class="flex items-center gap-2 px-2 py-1.5 rounded-sm text-xs text-danger hover:bg-surface-3"
+              data-testid="logout"
               @click="handleLogout"
             >
               <IconLogout class="h-4 w-4" />

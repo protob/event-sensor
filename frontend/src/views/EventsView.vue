@@ -152,14 +152,41 @@ onMounted(async () => {
             class="flex items-center gap-2 min-w-0 max-lg:absolute max-lg:top-full max-lg:inset-x-0 max-lg:flex-wrap max-lg:gap-y-2 max-lg:p-3 max-lg:bg-surface-2 max-lg:border-b max-lg:border-line max-lg:shadow-lg"
             :class="filtersOpen ? '' : 'max-lg:hidden'"
           >
-            <Pill :active="timeFilter === 'all'" @click="timeFilter = 'all'">All</Pill>
-            <Pill :active="timeFilter === 'week'" @click="timeFilter = 'week'">This Week</Pill>
-            <Pill :active="timeFilter === 'month'" @click="timeFilter = 'month'">This Month</Pill>
+            <Pill
+              :active="timeFilter === 'all'"
+              data-testid="filter-time-all"
+              @click="timeFilter = 'all'"
+              >All</Pill
+            >
+            <Pill
+              :active="timeFilter === 'week'"
+              data-testid="filter-time-week"
+              @click="timeFilter = 'week'"
+              >This Week</Pill
+            >
+            <Pill
+              :active="timeFilter === 'month'"
+              data-testid="filter-time-month"
+              @click="timeFilter = 'month'"
+              >This Month</Pill
+            >
             <span class="w-px h-4 bg-line shrink-0 max-lg:hidden" />
-            <Pill tone="accent" :active="onlyClaimed" @click="onlyClaimed = !onlyClaimed">
+            <Pill
+              tone="accent"
+              :active="onlyClaimed"
+              data-testid="filter-only-claimed"
+              @click="onlyClaimed = !onlyClaimed"
+            >
               Interested
             </Pill>
-            <Pill tone="neutral" :active="showPast" @click="showPast = !showPast"> Show past </Pill>
+            <Pill
+              tone="neutral"
+              :active="showPast"
+              data-testid="filter-show-past"
+              @click="showPast = !showPast"
+            >
+              Show past
+            </Pill>
 
             <span class="w-px h-4 bg-line shrink-0 max-lg:hidden" />
             <!-- multi-select country filter (empty = whole region) -->

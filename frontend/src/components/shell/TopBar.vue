@@ -169,6 +169,7 @@ async function fetchAll() {
         type="text"
         :placeholder="searchHint"
         aria-label="Search events"
+        data-testid="search-input"
         class="bg-transparent text-xs text-body font-mono py-1 w-full placeholder:text-faint focus:outline-none"
       />
     </div>
