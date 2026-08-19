@@ -1,0 +1,24 @@
+# Plain systemd unit for a single-binary service — any Linux, no nix.
+# Paths/vars mirror event-sensor.nix.
+
+[Unit]
+Description=Event Sensor - concert radar + diary (Go embeds Vue)
+After=network.target
+
+[Service]
+Type=simple
+User=username
+Group=wheel
+Restart=on-failure
+RestartSec=10
+KillMode=process
+# `~` is the one tilde systemd expands: the home of the user in User=.
+WorkingDirectory=~
+ExecStart=/home/username/custom-systemd/event-sensor/event-sensor-bin
+Environment=PORT=6034
+Environment=DB_PATH=/home/username/0/apps-media/event-sensor/event-sensor.db
+# Secrets live outside the unit file (agenix-managed):
+EnvironmentFile=/run/agenix/event-sensor-env
+
+[Install]
+WantedBy=multi-user.target

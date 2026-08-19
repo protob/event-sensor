@@ -1,0 +1,8 @@
+# Example secrets file for the systemd EnvironmentFile.
+# Copy to an agenix/sops-managed location (e.g. /run/agenix/event-sensor-env),
+# chown root, chmod 600. Never commit real values; never reference via a nix
+# store path.
+JWT_SECRET=change-me-openssl-rand-hex-32
+# Optional per-instance override; otherwise the server default (agenix
+# /run/agenix/ticketmaster-api-key or env) applies.
+#TICKETMASTER_API_KEY=
