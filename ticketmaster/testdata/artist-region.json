@@ -1,0 +1,81 @@
+{
+  "_embedded": {
+    "events": [
+      {
+        "id": "Z698xZC2Z1region01",
+        "name": "Region Artist - Continental Tour",
+        "type": "event",
+        "url": "https://www.ticketmaster.de/event/region-artist-tickets/300000001",
+        "dates": {
+          "start": {
+            "localDate": "{{+35d}}",
+            "localTime": "20:00:00",
+            "dateTime": "{{+35dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zregiona",
+              "name": "Grosse Freiheit",
+              "city": { "name": "Hamburg" },
+              "country": { "name": "Germany", "countryCode": "DE" },
+              "location": { "latitude": "53.55073", "longitude": "9.95817" }
+            }
+          ],
+          "attractions": [{ "id": "K8vZ9172222", "name": "Region Artist" }]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": { "id": "KZFzniwnSyZfZ7v7nJ", "name": "Music" },
+            "genre": { "id": "KnvZfZ7vAvl", "name": "Other" },
+            "type": { "id": "", "name": "" },
+            "subType": { "id": "", "name": "" }
+          }
+        ],
+        "info": "",
+        "images": []
+      },
+      {
+        "id": "Z698xZC2Z1region02",
+        "name": "Region Artist - North American Tour",
+        "type": "event",
+        "url": "https://www.ticketmaster.com/event/region-artist-tickets/300000002",
+        "dates": {
+          "start": {
+            "localDate": "{{+38d}}",
+            "localTime": "19:30:00",
+            "dateTime": "{{+38dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zregionb",
+              "name": "Riverside Theater",
+              "city": { "name": "Chicago" },
+              "country": { "name": "United States Of America", "countryCode": "US" },
+              "location": { "latitude": "41.88186", "longitude": "-87.62768" }
+            }
+          ],
+          "attractions": [{ "id": "K8vZ9172222", "name": "Region Artist" }]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": { "id": "KZFzniwnSyZfZ7v7nJ", "name": "Music" },
+            "genre": { "id": "KnvZfZ7vAvl", "name": "Other" },
+            "type": { "id": "", "name": "" },
+            "subType": { "id": "", "name": "" }
+          }
+        ],
+        "info": "",
+        "images": []
+      }
+    ]
+  },
+  "page": { "totalElements": 2, "totalPages": 1, "number": 0 }
+}

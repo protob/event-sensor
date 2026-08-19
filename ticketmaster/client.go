@@ -8,18 +8,30 @@ import (
 	"time"
 )
 
-const baseURL = "https://app.ticketmaster.com/discovery/v2/events.json"
+// DefaultBaseURL is the Ticketmaster Discovery events endpoint.
+const DefaultBaseURL = "https://app.ticketmaster.com/discovery/v2/events.json"
 
 // Client is an HTTP client for the Ticketmaster Discovery API.
 type Client struct {
 	apiKey     string
+	baseURL    string
 	httpClient *http.Client
 }
 
-// NewClient creates a new Ticketmaster API client.
+// NewClient creates a client against the Ticketmaster API.
 func NewClient(apiKey string) *Client {
+	return NewClientWithBase(apiKey, DefaultBaseURL)
+}
+
+// NewClientWithBase creates a client against baseURL, which can be a local server
+// returning recorded responses. An empty baseURL means DefaultBaseURL.
+func NewClientWithBase(apiKey, baseURL string) *Client {
+	if baseURL == "" {
+		baseURL = DefaultBaseURL
+	}
 	return &Client{
 		apiKey:     apiKey,
+		baseURL:    baseURL,
 		httpClient: &http.Client{Timeout: 30 * time.Second},
 	}
 }
@@ -36,7 +48,7 @@ func (c *Client) SearchEvents(keyword string) (*Response, error) {
 	// noise (the comedy "Les Bonobos", sports, etc.) is filtered downstream by matching the
 	// billed attraction - see ticketmaster.ClassifyArtistMatch.
 
-	resp, err := c.httpClient.Get(fmt.Sprintf("%s?%s", baseURL, params.Encode()))
+	resp, err := c.httpClient.Get(fmt.Sprintf("%s?%s", c.baseURL, params.Encode()))
 	if err != nil {
 		return nil, fmt.Errorf("ticketmaster request failed: %w", err)
 	}

@@ -1,0 +1,85 @@
+{
+  "_embedded": {
+    "events": [
+      {
+        "id": "Z698xZC2Z1simple01",
+        "name": "Fixture Artist - Night Signals Tour 2026",
+        "type": "event",
+        "url": "https://www.ticketmaster.de/event/fixture-artist-night-signals-tickets/100000001",
+        "dates": {
+          "start": {
+            "localDate": "{{+30d}}",
+            "localTime": "20:30:00",
+            "dateTime": "{{+30dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zsimplea",
+              "name": "Stadthalle Nord",
+              "city": { "name": "Bremen" },
+              "country": { "name": "Germany", "countryCode": "DE" },
+              "location": { "latitude": "53.07930", "longitude": "8.80169" }
+            }
+          ],
+          "attractions": [{ "id": "K8vZ9170000", "name": "Fixture Artist" }]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": { "id": "KZFzniwnSyZfZ7v7nJ", "name": "Music" },
+            "genre": { "id": "KnvZfZ7vAvl", "name": "Other" },
+            "type": { "id": "", "name": "" },
+            "subType": { "id": "", "name": "" }
+          }
+        ],
+        "info": "Einlass 19:00 Uhr.",
+        "images": [
+          {
+            "url": "https://s1.ticketm.net/dam/a/000/00000000-0000-0000-0000-000000000001_RETINA_PORTRAIT_16_9.jpg",
+            "width": 640,
+            "height": 360
+          }
+        ]
+      },
+      {
+        "id": "Z698xZC2Z1simple02",
+        "name": "Fixture Artist",
+        "type": "event",
+        "url": "https://www.ticketmaster.pl/event/fixture-artist-tickets/100000002",
+        "dates": {
+          "start": {
+            "localDate": "{{+45d}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zsimpleb",
+              "name": "Klub Riviera",
+              "city": { "name": "Warszawa" },
+              "country": { "name": "Poland", "countryCode": "PL" },
+              "location": { "latitude": "52.22977", "longitude": "21.01178" }
+            }
+          ],
+          "attractions": [{ "id": "K8vZ9170000", "name": "Fixture Artist" }]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": { "id": "KZFzniwnSyZfZ7v7nJ", "name": "Music" },
+            "genre": { "id": "KnvZfZ7vAvl", "name": "Other" },
+            "type": { "id": "", "name": "" },
+            "subType": { "id": "", "name": "" }
+          }
+        ],
+        "info": "",
+        "images": []
+      }
+    ]
+  },
+  "page": { "totalElements": 2, "totalPages": 1, "number": 0 }
+}

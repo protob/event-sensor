@@ -180,7 +180,7 @@ func (h *Handler) FetchArtistEvents(ctx context.Context, input *FetchArtistEvent
 	region := ticketmaster.DefaultRegionCodes
 	if uid := UserIDFromContext(ctx); uid != "" {
 		if s, err := h.queries.GetUserSetting(ctx, sqlc.GetUserSettingParams{UserID: uid, Key: "tm.api_key"}); err == nil && s.Value != "" {
-			tmClient = ticketmaster.NewClient(s.Value)
+			tmClient = ticketmaster.NewClientWithBase(s.Value, h.config.TicketmasterBaseURL)
 		}
 		if s, err := h.queries.GetUserSetting(ctx, sqlc.GetUserSettingParams{UserID: uid, Key: "region.codes"}); err == nil && s.Value != "" {
 			region = ticketmaster.CodeSet(s.Value)

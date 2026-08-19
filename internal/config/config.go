@@ -11,11 +11,12 @@ const defaultJWTSecret = "dev-secret-change-in-production"
 
 // Config holds application configuration loaded from environment variables.
 type Config struct {
-	Bind               string
-	Port               string
-	DBPath             string
-	TicketmasterAPIKey string
-	JWTSecret          string
+	Bind                string
+	Port                string
+	DBPath              string
+	TicketmasterAPIKey  string
+	TicketmasterBaseURL string
+	JWTSecret           string
 }
 
 // Load reads configuration from environment variables with sensible defaults.
@@ -27,7 +28,9 @@ func Load() Config {
 		Port:               getEnv("PORT", "8080"),
 		DBPath:             getEnv("DB_PATH", "data/event-sensor.db"),
 		TicketmasterAPIKey: getTicketmasterKey(),
-		JWTSecret:          getEnv("JWT_SECRET", defaultJWTSecret),
+		// Empty means the real API; the client substitutes its default.
+		TicketmasterBaseURL: getEnv("TM_BASE_URL", ""),
+		JWTSecret:           getEnv("JWT_SECRET", defaultJWTSecret),
 	}
 }
 

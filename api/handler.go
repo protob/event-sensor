@@ -26,7 +26,7 @@ func NewHandler(db *sql.DB, queries *sqlc.Queries, cfg *config.Config) *Handler 
 		db:        db,
 		queries:   queries,
 		config:    cfg,
-		tmClient:  ticketmaster.NewClient(cfg.TicketmasterAPIKey),
+		tmClient:  ticketmaster.NewClientWithBase(cfg.TicketmasterAPIKey, cfg.TicketmasterBaseURL),
 		reconcile: reconcile.New(db, queries),
 	}
 }

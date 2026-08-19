@@ -134,7 +134,8 @@ belong there.
 ## Config
 
 Environment only, loaded in `internal/config`: `ES_BIND` (default `127.0.0.1`), `PORT`
-(`8080`), `DB_PATH` (`data/event-sensor.db`), `TICKETMASTER_API_KEY`, `JWT_SECRET`.
+(`8080`), `DB_PATH` (`data/event-sensor.db`), `TICKETMASTER_API_KEY`, `TM_BASE_URL`
+(empty: the real Discovery endpoint; tests point it at a local server), `JWT_SECRET`.
 `/run/agenix/ticketmaster-api-key` is read first, and the env key is the fallback. A
 per-user TM key set in Settings overrides the server-wide one at fetch time. `data/` and
 `.env` are gitignored runtime state; never commit a database or a real key.

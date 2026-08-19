@@ -1,0 +1,128 @@
+{
+  "_embedded": {
+    "events": [
+      {
+        "id": "Z698xZC2Z1fest01",
+        "name": "Nordwind Festival 2026 | Saturday",
+        "type": "event",
+        "url": "https://www.ticketmaster.nl/event/nordwind-festival-saturday-tickets/400000001",
+        "dates": {
+          "start": {
+            "localDate": "{{+90d}}",
+            "localTime": "12:00:00",
+            "dateTime": "{{+90dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zfesta",
+              "name": "Festivalterrein De Berendonck",
+              "city": { "name": "Wijchen" },
+              "country": { "name": "Netherlands", "countryCode": "NL" },
+              "location": { "latitude": "51.80397", "longitude": "5.79119" }
+            }
+          ],
+          "attractions": [
+            { "id": "K8vZ9173333", "name": "Festival Artist" },
+            { "id": "K8vZ9173330", "name": "Nordwind Festival" }
+          ]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": { "id": "KZFzniwnSyZfZ7v7nJ", "name": "Music" },
+            "genre": { "id": "KnvZfZ7vAvl", "name": "Other" },
+            "type": { "id": "", "name": "" },
+            "subType": { "id": "KZFzBErXgnZfZ7vAvv", "name": "Festival" }
+          }
+        ],
+        "info": "",
+        "images": []
+      },
+      {
+        "id": "Z698xZC2Z1fest02",
+        "name": "Nordwind Festival 2026 | Saturday Terras",
+        "type": "event",
+        "url": "https://www.ticketmaster.nl/event/nordwind-festival-saturday-terras-tickets/400000002",
+        "dates": {
+          "start": {
+            "localDate": "{{+90d}}",
+            "localTime": "12:00:00",
+            "dateTime": "{{+90dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zfesta",
+              "name": "Festivalterrein De Berendonck",
+              "city": { "name": "Wijchen" },
+              "country": { "name": "Netherlands", "countryCode": "NL" },
+              "location": { "latitude": "51.80397", "longitude": "5.79119" }
+            }
+          ],
+          "attractions": [
+            { "id": "K8vZ9173333", "name": "Festival Artist" },
+            { "id": "K8vZ9173330", "name": "Nordwind Festival" }
+          ]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": { "id": "KZFzniwnSyZfZ7v7nJ", "name": "Music" },
+            "genre": { "id": "KnvZfZ7vAvl", "name": "Other" },
+            "type": { "id": "", "name": "" },
+            "subType": { "id": "KZFzBErXgnZfZ7vAvv", "name": "Festival" }
+          }
+        ],
+        "info": "",
+        "images": []
+      },
+      {
+        "id": "Z698xZC2Z1fest03",
+        "name": "Nordwind Festival 2026 | Combi Ticket",
+        "type": "event",
+        "url": "https://www.ticketmaster.nl/event/nordwind-festival-combi-tickets/400000003",
+        "dates": {
+          "start": {
+            "localDate": "{{+90d}}",
+            "localTime": "12:00:00",
+            "dateTime": "{{+90dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zfesta",
+              "name": "Festivalterrein De Berendonck",
+              "city": { "name": "Wijchen" },
+              "country": { "name": "Netherlands", "countryCode": "NL" },
+              "location": { "latitude": "51.80397", "longitude": "5.79119" }
+            }
+          ],
+          "attractions": [
+            { "id": "K8vZ9173333", "name": "Festival Artist" },
+            { "id": "K8vZ9173330", "name": "Nordwind Festival" },
+            { "id": "K8vZ9173334", "name": "Second Act" }
+          ]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": { "id": "KZFzniwnSyZfZ7v7nJ", "name": "Music" },
+            "genre": { "id": "KnvZfZ7vAvl", "name": "Other" },
+            "type": { "id": "", "name": "" },
+            "subType": { "id": "KZFzBErXgnZfZ7vAvv", "name": "Festival" }
+          }
+        ],
+        "info": "",
+        "images": []
+      }
+    ]
+  },
+  "page": { "totalElements": 3, "totalPages": 1, "number": 0 }
+}

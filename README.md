@@ -43,6 +43,7 @@ is the fallback.
 | `PORT`                 | `8080`                            | Listen port                                     |
 | `DB_PATH`              | `data/event-sensor.db`            | SQLite path; parent dir created on start (0700) |
 | `TICKETMASTER_API_KEY` | (empty)                           | Server-wide TM key                              |
+| `TM_BASE_URL`          | (empty)                           | Ticketmaster endpoint override; empty means the real API |
 | `JWT_SECRET`           | `dev-secret-change-in-production` | JWT signing secret                              |
 
 ## Deployment

@@ -16,6 +16,7 @@ import (
 	"github.com/protob/event-sensor/db"
 	"github.com/protob/event-sensor/db/sqlc"
 	"github.com/protob/event-sensor/internal/config"
+	"github.com/protob/event-sensor/internal/reconcile"
 )
 
 // testApp is the binary without main(): the real router over a real migrated SQLite file
@@ -63,6 +64,17 @@ func newTestApp(t *testing.T, mutate ...func(*config.Config)) *testApp {
 	app := &testApp{t: t, server: srv, conn: conn, queries: queries}
 	app.login("admin", "password")
 	return app
+}
+
+// newTestAppWithTM starts an app whose Ticketmaster client points at a local stub.
+func newTestAppWithTM(t *testing.T) (*testApp, *tmStub) {
+	t.Helper()
+	stub := newTMStub(t)
+	app := newTestApp(t, func(c *config.Config) {
+		c.TicketmasterAPIKey = "test-key"
+		c.TicketmasterBaseURL = stub.URL
+	})
+	return app, stub
 }
 
 // do sends an authenticated JSON request and fails the test unless the status matches.
@@ -177,4 +189,31 @@ func (a *testApp) eventExists(id string) bool {
 		a.t.Fatalf("count events: %v", err)
 	}
 	return n == 1
+}
+
+// fetch runs a reconcile for one artist and returns the counters.
+func (a *testApp) fetch(artistID string) reconcile.Result {
+	a.t.Helper()
+	resp := a.do(http.MethodPost, "/api/artists/"+artistID+"/fetch-events", nil, http.StatusOK)
+	return decode[reconcile.Result](a.t, resp)
+}
+
+// fetchLogStatuses returns the fetch_log status column in insertion order.
+func (a *testApp) fetchLogStatuses() []string {
+	a.t.Helper()
+	rows, err := a.conn.Query(`SELECT status FROM fetch_log ORDER BY started_at, rowid`)
+	if err != nil {
+		a.t.Fatalf("read fetch_log: %v", err)
+	}
+	defer rows.Close()
+
+	var out []string
+	for rows.Next() {
+		var s string
+		if err := rows.Scan(&s); err != nil {
+			a.t.Fatalf("scan fetch_log: %v", err)
+		}
+		out = append(out, s)
+	}
+	return out
 }
