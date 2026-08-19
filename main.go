@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"database/sql"
-	"embed"
 	"io/fs"
 	"log"
 	"net"
@@ -16,17 +15,13 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/pressly/goose/v3"
-	_ "modernc.org/sqlite"
 
 	"github.com/protob/event-sensor/api"
+	"github.com/protob/event-sensor/db"
 	"github.com/protob/event-sensor/db/sqlc"
 	"github.com/protob/event-sensor/internal/auth"
 	"github.com/protob/event-sensor/internal/config"
 )
-
-//go:embed db/migrations/*.sql
-var migrationsFS embed.FS
 
 // warnDefaultAdminPassword logs when any account still authenticates with the
 // seeded "password". Off-loopback that login is the front door, so the operator
@@ -71,40 +66,24 @@ func main() {
 		}
 	}
 
-	// Open SQLite database. foreign_keys is a PER-CONNECTION pragma in SQLite, so it must
-	// live in the DSN (modernc honors _pragma) - a one-off db.Exec would only set it on
-	// whichever pooled connection happened to serve it, leaving ON DELETE RESTRICT able to
-	// silently no-op on other connections. busy_timeout + WAL go here too for consistency.
-	dsn := cfg.DBPath + "?_pragma=foreign_keys(1)&_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)&_txlock=immediate"
-	db, err := sql.Open("sqlite", dsn)
+	conn, err := db.Open(cfg.DBPath)
 	if err != nil {
 		log.Fatalf("failed to open database: %v", err)
 	}
-	defer db.Close()
+	defer conn.Close()
 
-	// Single writer: serializes writes and avoids SQLITE_BUSY. The network fetch happens
-	// before the transaction opens, so this connection is only ever held for a small local
-	// write, and the data ceiling is one person's concert history - a read/write pool split
-	// would buy nothing.
-	db.SetMaxOpenConns(1)
-
-	// Run migrations
-	goose.SetBaseFS(migrationsFS)
-	if err := goose.SetDialect("sqlite3"); err != nil {
-		log.Fatalf("failed to set goose dialect: %v", err)
-	}
-	if err := goose.Up(db, "db/migrations"); err != nil {
+	if err := db.Migrate(conn); err != nil {
 		log.Fatalf("failed to run migrations: %v", err)
 	}
 
 	// Create SQLC queries and handler
-	queries := sqlc.New(db)
+	queries := sqlc.New(conn)
 
 	if !cfg.IsLoopbackBind() {
-		warnDefaultAdminPassword(db)
+		warnDefaultAdminPassword(conn)
 	}
 
-	handler := api.NewHandler(db, queries, &cfg)
+	handler := api.NewHandler(conn, queries, &cfg)
 
 	// Setup router
 	r := chi.NewRouter()

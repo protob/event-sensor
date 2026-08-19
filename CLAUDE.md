@@ -32,9 +32,10 @@ and embeds `frontend/dist`; a binary built without the tag serves a notice page 
 ## Layout
 
 ```
-main.go          startup: config, SQLite DSN, migrations, chi router, SPA fallback
+main.go          startup: config, router assembly, SPA fallback, graceful shutdown
 api/             Huma handlers, routes, middleware, wire types
 cmd/tm-cli/      Ticketmaster API debug CLI
+db/db.go         Open (pragma DSN, single writer) + Migrate (embedded goose migrations)
 db/migrations/   goose migrations (embedded, run on startup)
 db/queries/      sqlc query definitions — the hand-written SQL
 db/sqlc/         generated Go — never edit by hand
@@ -70,8 +71,8 @@ A change that breaks one of these is a bug, not a refactor.
 
 ## Backend conventions
 
-- **SQLite via modernc (pure Go, `CGO_ENABLED=0`).** Pragmas live in the DSN
-  (`foreign_keys`, `busy_timeout`, WAL, `_txlock=immediate`) because they are
+- **SQLite via modernc (pure Go, `CGO_ENABLED=0`).** Pragmas live in the DSN in
+  `db/db.go` (`foreign_keys`, `busy_timeout`, WAL, `_txlock=immediate`) because they are
   per-connection; a `db.Exec("PRAGMA ...")` would only reach one pooled connection.
   `SetMaxOpenConns(1)` — single writer. Tables are STRICT.
 - **sqlc**: add or edit SQL in `db/queries/*.sql` with a `-- name: X :one|:many|:exec`
