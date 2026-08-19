@@ -17,6 +17,7 @@ import (
 	"github.com/protob/event-sensor/db/sqlc"
 	"github.com/protob/event-sensor/internal/config"
 	"github.com/protob/event-sensor/internal/reconcile"
+	"github.com/protob/event-sensor/internal/uuid"
 )
 
 // testApp is the binary without main(): the real router over a real migrated SQLite file
@@ -178,6 +179,38 @@ func (a *testApp) unclaim(eventID string) {
 func (a *testApp) events() []api.EventResponse {
 	a.t.Helper()
 	return decode[[]api.EventResponse](a.t, a.do(http.MethodGet, "/api/events", nil, http.StatusOK))
+}
+
+func (a *testApp) eventByID(id string) api.EventResponse {
+	a.t.Helper()
+	return decode[api.EventResponse](a.t, a.do(http.MethodGet, "/api/events/"+id, nil, http.StatusOK))
+}
+
+// addPerformance links an artist to an event directly. Only the reconcile writes
+// Ticketmaster performances, so there is no endpoint for this.
+func (a *testApp) addPerformance(eventID, artistID, artistName string) {
+	a.t.Helper()
+	_, err := a.conn.Exec(
+		`INSERT INTO performances (id, event_id, artist_id, artist_name, is_headliner)
+		 VALUES (?, ?, ?, ?, 0)`,
+		uuid.New(), eventID, artistID, artistName)
+	if err != nil {
+		a.t.Fatalf("insert performance: %v", err)
+	}
+}
+
+// claimStatus returns the library claim for an event, empty when there is none. It reads
+// /api/library rather than the event: EventResponse.status is filled in only when the read
+// routes are authenticated, and on a loopback bind they are public.
+func (a *testApp) claimStatus(eventID string) string {
+	a.t.Helper()
+	entries := decode[[]api.LibraryEntryResponse](a.t, a.do(http.MethodGet, "/api/library", nil, http.StatusOK))
+	for _, e := range entries {
+		if e.EventID == eventID {
+			return e.Status
+		}
+	}
+	return ""
 }
 
 // eventExists reports whether an event id is still in the store, without going through

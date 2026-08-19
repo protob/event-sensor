@@ -184,10 +184,6 @@ func (s *Service) Reconcile(ctx context.Context, artist sqlc.Artist, region map[
 		}
 	}
 
-// TODO(design): the claimed-event-survives-refetch invariant is verified by a manual
-// sqlite3 recipe. Owner decides whether to add a single Go test for it (the one place
-// worth breaking the repo no-tests rule).
-	//
 	// Sweep: delete un-claimed, now-absent TM events for this artist.
 	sweepRes, err := tx.ExecContext(ctx, sweepSQL, artist.ID)
 	if err != nil {
