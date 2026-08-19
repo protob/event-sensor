@@ -47,7 +47,6 @@ playwright/.cache/
 result
 result-*
 .direnv/
-.envrc
 
 # IDE
 .idea/
