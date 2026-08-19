@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"strings"
 	"syscall"
 	"time"
 
@@ -22,6 +23,21 @@ import (
 	"github.com/protob/event-sensor/internal/auth"
 	"github.com/protob/event-sensor/internal/config"
 )
+
+// mountSPA serves dist and falls back to index.html for unknown paths, so client-side
+// routes survive a reload. It is registered after /api, which keeps the fallback from
+// answering for a mistyped endpoint.
+func mountSPA(r chi.Router, dist fs.FS) {
+	fileServer := http.FileServer(http.FS(dist))
+	r.Get("/*", func(w http.ResponseWriter, req *http.Request) {
+		if _, err := fs.Stat(dist, strings.TrimPrefix(req.URL.Path, "/")); err == nil {
+			fileServer.ServeHTTP(w, req)
+			return
+		}
+		req.URL.Path = "/"
+		fileServer.ServeHTTP(w, req)
+	})
+}
 
 // warnDefaultAdminPassword logs when any account still authenticates with the
 // seeded "password". Off-loopback that login is the front door, so the operator
@@ -95,16 +111,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to load embedded frontend: %v", err)
 	}
-	fileServer := http.FileServer(http.FS(frontendDist))
-	r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
-		if _, err := fs.Stat(frontendDist, r.URL.Path[1:]); err == nil {
-			fileServer.ServeHTTP(w, r)
-			return
-		}
-		// SPA fallback: serve index.html for all unmatched routes
-		r.URL.Path = "/"
-		fileServer.ServeHTTP(w, r)
-	})
+	mountSPA(r, frontendDist)
 
 	// Start server
 	srv := &http.Server{

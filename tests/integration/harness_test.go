@@ -24,6 +24,7 @@ import (
 // in t.TempDir(), reached over real HTTP. Every test gets its own database and server.
 type testApp struct {
 	t       *testing.T
+	cfg     config.Config
 	server  *httptest.Server
 	conn    *sql.DB
 	queries *sqlc.Queries
@@ -62,7 +63,7 @@ func newTestApp(t *testing.T, mutate ...func(*config.Config)) *testApp {
 	srv := httptest.NewServer(r)
 	t.Cleanup(srv.Close)
 
-	app := &testApp{t: t, server: srv, conn: conn, queries: queries}
+	app := &testApp{t: t, cfg: cfg, server: srv, conn: conn, queries: queries}
 	app.login("admin", "password")
 	return app
 }
@@ -82,7 +83,7 @@ func newTestAppWithTM(t *testing.T) (*testApp, *tmStub) {
 // The caller closes the body, or passes the response to decode/drain.
 func (a *testApp) do(method, path string, body any, want int) *http.Response {
 	a.t.Helper()
-	return a.request(a.token, method, path, body, want)
+	return a.request("Bearer "+a.token, method, path, body, want)
 }
 
 // doAnon sends the same request without an Authorization header.
@@ -91,7 +92,10 @@ func (a *testApp) doAnon(method, path string, body any, want int) *http.Response
 	return a.request("", method, path, body, want)
 }
 
-func (a *testApp) request(token, method, path string, body any, want int) *http.Response {
+// request sends authz verbatim as the Authorization header, empty meaning none, so a test
+// can present a scheme or a signature the app never issues. want of 0 accepts any status,
+// for the cases where the code depends on where the request fails.
+func (a *testApp) request(authz, method, path string, body any, want int) *http.Response {
 	a.t.Helper()
 
 	var payload io.Reader
@@ -110,15 +114,15 @@ func (a *testApp) request(token, method, path string, body any, want int) *http.
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
-	if token != "" {
-		req.Header.Set("Authorization", "Bearer "+token)
+	if authz != "" {
+		req.Header.Set("Authorization", authz)
 	}
 
 	resp, err := a.server.Client().Do(req)
 	if err != nil {
 		a.t.Fatalf("%s %s: %v", method, path, err)
 	}
-	if resp.StatusCode != want {
+	if want != 0 && resp.StatusCode != want {
 		b, _ := io.ReadAll(resp.Body)
 		resp.Body.Close()
 		a.t.Fatalf("%s %s: got status %d, want %d, body: %s", method, path, resp.StatusCode, want, b)
