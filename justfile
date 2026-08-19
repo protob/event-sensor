@@ -24,6 +24,10 @@ build-fe:
 test:
     go test ./...
 
+# Run frontend unit tests
+test-fe:
+    cd frontend && bun test
+
 # Generate SQLC code
 generate:
     sqlc generate

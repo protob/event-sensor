@@ -4,7 +4,13 @@ import { storeToRefs } from "pinia";
 import { useEventsStore } from "@/stores/events";
 import { useUiStore } from "@/stores/ui";
 import { countryName } from "@/utils";
-import { matchesQuery, inDateRange, sortEvents, withinDays } from "@/composables/useEventFilters";
+import {
+  isRadarEvent,
+  matchesQuery,
+  inDateRange,
+  sortEvents,
+  withinDays,
+} from "@/composables/useEventFilters";
 
 type TimeFilter = "all" | "week" | "month";
 type GroupBy = "none" | "artist" | "country";
@@ -25,15 +31,7 @@ export function useEventsRadar() {
   const timeFilter = ref<TimeFilter>("all");
   const selectedArtistId = ref<string | null>(null);
 
-  // The radar set: discovery is forward-looking only - past and delisted TM events stay
-  // hidden unless "Show past" is on.
-  const radarEvents = computed(() =>
-    events.value.filter((e) => {
-      if (e.source !== "ticketmaster") return false;
-      if (!showPast.value && (e.is_past || e.listing_state !== "listed")) return false;
-      return true;
-    }),
-  );
+  const radarEvents = computed(() => events.value.filter((e) => isRadarEvent(e, showPast.value)));
 
   // Countries present in the radar events, with per-country event counts, for the country
   // filter. Counts come from the full radar set (not the filtered view) so they stay stable

@@ -2,6 +2,14 @@ import type { Event } from "@/types";
 import type { EventSort } from "@/stores/ui";
 import { headlinerName } from "@/utils/eventSections";
 
+// Discovery is forward-looking: past and delisted Ticketmaster events stay out of the
+// radar set unless explicitly asked for. Manual events are never part of it.
+export function isRadarEvent(e: Event, showPast: boolean): boolean {
+  if (e.source !== "ticketmaster") return false;
+  if (!showPast && (e.is_past || e.listing_state !== "listed")) return false;
+  return true;
+}
+
 export function matchesQuery(e: Event, q: string): boolean {
   if (!q) return true;
   const needle = q.toLowerCase();
