@@ -14,11 +14,15 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{ toggle: [] }>();
+
+// The root is a positioning wrapper; a data-testid set by the caller belongs on the
+// trigger, which is the thing that gets clicked.
+defineOptions({ inheritAttrs: false });
 </script>
 
 <template>
   <div class="relative">
-    <Btn size="sm" tone="neutral" @click="emit('toggle')">{{ props.label }} ▾</Btn>
+    <Btn size="sm" tone="neutral" v-bind="$attrs" @click="emit('toggle')">{{ props.label }} ▾</Btn>
     <div
       v-if="props.open"
       class="absolute bottom-full mb-1 left-0 rounded-sm border border-line-2 bg-surface shadow-lg overflow-hidden"

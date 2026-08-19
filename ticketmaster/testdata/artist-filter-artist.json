@@ -1,0 +1,135 @@
+{
+  "_embedded": {
+    "events": [
+      {
+        "id": "Z698xZC2Z1filter01",
+        "name": "Filter Artist - Winter Nights, Wien",
+        "type": "event",
+        "url": "https://www.ticketmaster.de/event/z698xzc2z1filter01/tickets",
+        "dates": {
+          "start": {
+            "localDate": "{{+35d}}",
+            "localTime": "20:00:00",
+            "dateTime": "{{+35dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zfiltera",
+              "name": "Arena Wien",
+              "city": {
+                "name": "Wien"
+              },
+              "country": {
+                "name": "Austria",
+                "countryCode": "AT"
+              },
+              "location": {
+                "latitude": "48.18570",
+                "longitude": "16.39430"
+              }
+            }
+          ],
+          "attractions": [
+            {
+              "id": "K8vZ9172222",
+              "name": "Filter Artist"
+            }
+          ]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": {
+              "id": "KZFzniwnSyZfZ7v7nJ",
+              "name": "Music"
+            },
+            "genre": {
+              "id": "KnvZfZ7vAvl",
+              "name": "Other"
+            },
+            "type": {
+              "id": "",
+              "name": ""
+            },
+            "subType": {
+              "id": "",
+              "name": ""
+            }
+          }
+        ],
+        "info": "",
+        "images": []
+      },
+      {
+        "id": "Z698xZC2Z1filter02",
+        "name": "Filter Artist - Winter Nights, Praha",
+        "type": "event",
+        "url": "https://www.ticketmaster.de/event/z698xzc2z1filter02/tickets",
+        "dates": {
+          "start": {
+            "localDate": "{{+38d}}",
+            "localTime": "20:00:00",
+            "dateTime": "{{+38dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zfilterb",
+              "name": "Roxy",
+              "city": {
+                "name": "Praha"
+              },
+              "country": {
+                "name": "Czech Republic",
+                "countryCode": "CZ"
+              },
+              "location": {
+                "latitude": "50.09010",
+                "longitude": "14.42540"
+              }
+            }
+          ],
+          "attractions": [
+            {
+              "id": "K8vZ9172222",
+              "name": "Filter Artist"
+            }
+          ]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": {
+              "id": "KZFzniwnSyZfZ7v7nJ",
+              "name": "Music"
+            },
+            "genre": {
+              "id": "KnvZfZ7vAvl",
+              "name": "Other"
+            },
+            "type": {
+              "id": "",
+              "name": ""
+            },
+            "subType": {
+              "id": "",
+              "name": ""
+            }
+          }
+        ],
+        "info": "",
+        "images": []
+      }
+    ]
+  },
+  "page": {
+    "totalElements": 2,
+    "totalPages": 1,
+    "number": 0
+  }
+}

@@ -28,6 +28,13 @@ test:
 test-fe:
     cd frontend && bun test
 
+# Run the browser tests (needs `nix develop` for the Playwright browsers)
+e2e:
+    cd e2e && bun install && bun x playwright test
+
+# Go, frontend units, browser
+test-all: test test-fe e2e
+
 # Generate SQLC code
 generate:
     sqlc generate

@@ -115,6 +115,7 @@ const focusedArtist = computed(() => (focused.value != null ? artists.value[focu
         <button
           class="font-mono text-label text-faint hover:text-body"
           :title="'Paste a list of names (one per line) or CSV: name, date, venue'"
+          data-testid="lineup-paste"
           @click="showPaste = !showPaste"
         >
           ⎘ paste list

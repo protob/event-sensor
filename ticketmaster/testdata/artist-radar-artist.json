@@ -1,0 +1,259 @@
+{
+  "_embedded": {
+    "events": [
+      {
+        "id": "Z698xZC2Z1radar01",
+        "name": "Radar Artist - Signal Tour, Berlin",
+        "type": "event",
+        "url": "https://www.ticketmaster.de/event/z698xzc2z1radar01/tickets",
+        "dates": {
+          "start": {
+            "localDate": "{{+20d}}",
+            "localTime": "20:00:00",
+            "dateTime": "{{+20dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zradara",
+              "name": "Columbiahalle",
+              "city": {
+                "name": "Berlin"
+              },
+              "country": {
+                "name": "Germany",
+                "countryCode": "DE"
+              },
+              "location": {
+                "latitude": "52.49380",
+                "longitude": "13.39030"
+              }
+            }
+          ],
+          "attractions": [
+            {
+              "id": "K8vZ9171111",
+              "name": "Radar Artist"
+            }
+          ]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": {
+              "id": "KZFzniwnSyZfZ7v7nJ",
+              "name": "Music"
+            },
+            "genre": {
+              "id": "KnvZfZ7vAvl",
+              "name": "Other"
+            },
+            "type": {
+              "id": "",
+              "name": ""
+            },
+            "subType": {
+              "id": "",
+              "name": ""
+            }
+          }
+        ],
+        "info": "",
+        "images": []
+      },
+      {
+        "id": "Z698xZC2Z1radar02",
+        "name": "Radar Artist - Signal Tour, Hamburg",
+        "type": "event",
+        "url": "https://www.ticketmaster.de/event/z698xzc2z1radar02/tickets",
+        "dates": {
+          "start": {
+            "localDate": "{{+22d}}",
+            "localTime": "20:00:00",
+            "dateTime": "{{+22dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zradarb",
+              "name": "Grosse Freiheit 36",
+              "city": {
+                "name": "Hamburg"
+              },
+              "country": {
+                "name": "Germany",
+                "countryCode": "DE"
+              },
+              "location": {
+                "latitude": "53.55110",
+                "longitude": "9.95800"
+              }
+            }
+          ],
+          "attractions": [
+            {
+              "id": "K8vZ9171111",
+              "name": "Radar Artist"
+            }
+          ]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": {
+              "id": "KZFzniwnSyZfZ7v7nJ",
+              "name": "Music"
+            },
+            "genre": {
+              "id": "KnvZfZ7vAvl",
+              "name": "Other"
+            },
+            "type": {
+              "id": "",
+              "name": ""
+            },
+            "subType": {
+              "id": "",
+              "name": ""
+            }
+          }
+        ],
+        "info": "",
+        "images": []
+      },
+      {
+        "id": "Z698xZC2Z1radar03",
+        "name": "Radar Artist - Signal Tour, Warszawa",
+        "type": "event",
+        "url": "https://www.ticketmaster.de/event/z698xzc2z1radar03/tickets",
+        "dates": {
+          "start": {
+            "localDate": "{{+24d}}",
+            "localTime": "20:00:00",
+            "dateTime": "{{+24dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zradarc",
+              "name": "Klub Proxima",
+              "city": {
+                "name": "Warszawa"
+              },
+              "country": {
+                "name": "Poland",
+                "countryCode": "PL"
+              },
+              "location": {
+                "latitude": "52.22977",
+                "longitude": "21.01178"
+              }
+            }
+          ],
+          "attractions": [
+            {
+              "id": "K8vZ9171111",
+              "name": "Radar Artist"
+            }
+          ]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": {
+              "id": "KZFzniwnSyZfZ7v7nJ",
+              "name": "Music"
+            },
+            "genre": {
+              "id": "KnvZfZ7vAvl",
+              "name": "Other"
+            },
+            "type": {
+              "id": "",
+              "name": ""
+            },
+            "subType": {
+              "id": "",
+              "name": ""
+            }
+          }
+        ],
+        "info": "",
+        "images": []
+      },
+      {
+        "id": "Z698xZC2Z1radar04",
+        "name": "Radar Artist - Signal Tour, Praha",
+        "type": "event",
+        "url": "https://www.ticketmaster.de/event/z698xzc2z1radar04/tickets",
+        "dates": {
+          "start": {
+            "localDate": "{{+26d}}",
+            "localTime": "20:00:00",
+            "dateTime": "{{+26dT}}"
+          },
+          "end": null
+        },
+        "_embedded": {
+          "venues": [
+            {
+              "id": "Z698xZC2Zradard",
+              "name": "Lucerna Velky Sal",
+              "city": {
+                "name": "Praha"
+              },
+              "country": {
+                "name": "Czech Republic",
+                "countryCode": "CZ"
+              },
+              "location": {
+                "latitude": "50.08040",
+                "longitude": "14.42260"
+              }
+            }
+          ],
+          "attractions": [
+            {
+              "id": "K8vZ9171111",
+              "name": "Radar Artist"
+            }
+          ]
+        },
+        "classifications": [
+          {
+            "primary": true,
+            "segment": {
+              "id": "KZFzniwnSyZfZ7v7nJ",
+              "name": "Music"
+            },
+            "genre": {
+              "id": "KnvZfZ7vAvl",
+              "name": "Other"
+            },
+            "type": {
+              "id": "",
+              "name": ""
+            },
+            "subType": {
+              "id": "",
+              "name": ""
+            }
+          }
+        ],
+        "info": "",
+        "images": []
+      }
+    ]
+  },
+  "page": {
+    "totalElements": 4,
+    "totalPages": 1,
+    "number": 0
+  }
+}

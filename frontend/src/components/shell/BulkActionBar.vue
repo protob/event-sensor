@@ -83,7 +83,12 @@ const itemCls =
 
       <!-- events / library actions -->
       <template v-if="context === 'events' || context === 'library'">
-        <DropdownMenu label="Set status" :open="open === 'status'" @toggle="toggle('status')">
+        <DropdownMenu
+          label="Set status"
+          :open="open === 'status'"
+          data-testid="bulk-set-status"
+          @toggle="toggle('status')"
+        >
           <button
             v-for="s in STATUSES"
             :key="s.value || 'unclaim'"

@@ -9,7 +9,7 @@ func TestFetchStoresEvents(t *testing.T) {
 	app, stub := newTestAppWithTM(t)
 
 	artist := app.createArtist("Fixture Artist")
-	stub.serve(t, "Fixture Artist", "artist-simple.json")
+	stub.serve(t, "Fixture Artist", "artist-fixture-artist.json")
 
 	res := app.fetch(artist.ID)
 

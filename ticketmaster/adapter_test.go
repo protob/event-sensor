@@ -125,7 +125,7 @@ func TestFetchClassifiesTributeAndCoincidence(t *testing.T) {
 
 // A date with an announced time keeps it; a date-only listing stays date-only.
 func TestFetchKeepsDateGranularity(t *testing.T) {
-	got := fetchFixture(t, "artist-simple.json", "Fixture Artist", DefaultRegionCodes)
+	got := fetchFixture(t, "artist-fixture-artist.json", "Fixture Artist", DefaultRegionCodes)
 
 	for _, e := range got {
 		if e.HasTime != (len(e.StartDate) > len("2006-01-02")) {

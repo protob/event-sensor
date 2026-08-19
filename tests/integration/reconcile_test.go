@@ -37,7 +37,7 @@ func TestClaimSurvivesRefetch(t *testing.T) {
 	const name = "Fixture Artist"
 
 	artist := app.createArtist(name)
-	stub.serve(t, name, "artist-simple.json")
+	stub.serve(t, name, "artist-fixture-artist.json")
 	app.fetch(artist.ID)
 
 	events := app.events()
