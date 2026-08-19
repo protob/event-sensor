@@ -46,3 +46,6 @@ Thumbs.db
 # Air (hot reload)
 tmp/
 .air.toml
+
+# misc
+0_notes
