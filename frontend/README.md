@@ -11,7 +11,7 @@ ofetch, unplugin-icons (MDI + circle-flags).
 ```sh
 bun install
 bun run dev          # dev server
-bun run build        # vue-tsc + vite build
+bun run build        # vue-tsc + vite build -> ../internal/spa/dist
 bun run type-check   # vue-tsc
 bun run lint         # eslint --fix
 bun run format       # prettier

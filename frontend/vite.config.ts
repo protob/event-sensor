@@ -19,6 +19,12 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  // The Go binary embeds this directory, and go:embed cannot reach outside its own
+  // package, so the build output lands in the spa package instead of frontend/dist.
+  build: {
+    outDir: "../internal/spa/dist",
+    emptyOutDir: true,
+  },
   server: {
     proxy: {
       "/api": {

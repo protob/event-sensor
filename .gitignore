@@ -30,8 +30,9 @@ data/
 logs/
 
 # Frontend
-frontend/dist/
 frontend/node_modules/
+# vite build output; the release binary embeds it
+internal/spa/dist/
 
 # Tests (coverage lands in *.out above)
 coverage.html
@@ -46,6 +47,7 @@ playwright/.cache/
 result
 result-*
 .direnv/
+.envrc
 
 # IDE
 .idea/

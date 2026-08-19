@@ -178,12 +178,14 @@ just tm-cli      # build the Ticketmaster debug CLI
 Backend layout:
 
 ```
-api/            handlers, routes, middleware, Huma types
+cmd/event-sensor/ the binary: config, router assembly, graceful shutdown
 cmd/tm-cli/     Ticketmaster API debug CLI
+api/            handlers, routes, middleware, Huma types
 db/migrations/  goose migrations
 db/queries/     sqlc query definitions
 db/sqlc/        generated Go code
 internal/       auth, config, reconcile, provider seam, uuid
+internal/spa/   SPA embed + fallback handler; Vite writes its dist here
 ticketmaster/   TM client + parser (filters, matching, dedup)
 frontend/       Vue 3 SPA (see frontend/README.md)
 tests/          Go integration tests

@@ -74,3 +74,7 @@ sqlite3 <DB_PATH> "UPDATE users SET password='$(htpasswd -bnBC 10 "" 'newpass' |
 
 [docs/reference.md](docs/reference.md): data model, API endpoints, the Ticketmaster
 fetch pipeline, the UI pages, and development.
+
+## License
+
+MIT - see [LICENSE](LICENSE).

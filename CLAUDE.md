@@ -19,9 +19,9 @@ Playwright; bun and node are expected on the host and are never packaged here.
 just dev         # backend + Vite (HMR on :5173, /api proxied to :8080), one Ctrl-C
 just dev-be      # backend only (air if installed, else go run)
 just dev-fe      # Vite only
-just build-fe    # bun install + vite build -> frontend/dist
-just build       # build-fe, then CGO_ENABLED=0 go build -o event-sensor .
-just generate    # sqlc generate, after editing db/queries/*.sql
+just build-fe    # bun install + vite build -> internal/spa/dist
+just build       # build-fe, then go build -tags release ./cmd/event-sensor
+just generate    # sqlc generate -f db/sqlc.yaml, after editing db/queries/*.sql
 just migrate     # goose up against data/event-sensor.db
 just tm-cli      # build the Ticketmaster debug CLI
 ```
@@ -30,21 +30,25 @@ Checks: `go build ./...`, `go test ./...`, and in `frontend/`: `bun run type-che
 `bun run lint`, `bun run format`. `just check` runs all of them, and `just test-all`
 adds the browser suite.
 
-The SPA embed is behind the `release` build tag (`embed_dev.go` / `embed_release.go`),
-so a clean tree builds and tests without a frontend. `just build` passes `-tags release`
-and embeds `frontend/dist`; a binary built without the tag serves a notice page at `/`.
+The SPA embed is behind the `release` build tag (`internal/spa/embed_dev.go` /
+`embed_release.go`), so a clean tree builds and tests without a frontend. `just build`
+passes `-tags release` and embeds `internal/spa/dist`, which is where Vite writes because
+go:embed cannot reach outside its own package; a binary built without the tag serves a
+notice page at `/`.
 
 ## Layout
 
 ```
-main.go          startup: config, router assembly, SPA fallback, graceful shutdown
-api/             Huma handlers, routes, middleware, wire types
+cmd/event-sensor/ startup: config, router assembly, graceful shutdown
 cmd/tm-cli/      Ticketmaster API debug CLI
+api/             Huma handlers, routes, middleware, wire types
 db/db.go         Open (pragma DSN, single writer) + Migrate (embedded goose migrations)
 db/migrations/   goose migrations (embedded, run on startup)
 db/queries/      sqlc query definitions — the hand-written SQL
 db/sqlc/         generated Go — never edit by hand
+db/sqlc.yaml     sqlc config; paths in it are relative to db/
 internal/        auth, config, reconcile, provider seam, uuid
+internal/spa/    SPA embed (dev/release) + fallback handler
 ticketmaster/    TM client + parser (junk/region filters, artist match, dedup)
 frontend/        Vue 3 SPA (see frontend/README.md)
 tests/integration/ router + SQLite, no mocks

@@ -18,7 +18,7 @@ trap '[ -n "$STUB" ] && kill "$STUB" 2>/dev/null || true' EXIT INT TERM
 
 (cd "$E2E" && bun install --silent) >&2
 (cd "$ROOT/frontend" && bun install --silent && bun run build) >&2
-(cd "$ROOT" && CGO_ENABLED=0 go build -tags release -o "$WORK/event-sensor" .) >&2
+(cd "$ROOT" && CGO_ENABLED=0 go build -tags release -o "$WORK/event-sensor" ./cmd/event-sensor) >&2
 (cd "$ROOT" && go build -o "$WORK/tmstub" ./e2e/tmstub) >&2
 
 TM_PORT="${ES_E2E_TM_PORT:-8098}"

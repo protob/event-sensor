@@ -1,4 +1,4 @@
-package main
+package spa
 
 import (
 	"io"
@@ -25,7 +25,7 @@ func spaServer(t *testing.T) *httptest.Server {
 			w.WriteHeader(http.StatusNoContent)
 		})
 	})
-	mountSPA(r, dist)
+	mount(r, dist)
 
 	srv := httptest.NewServer(r)
 	t.Cleanup(srv.Close)

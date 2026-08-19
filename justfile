@@ -1,6 +1,6 @@
 # Run Go backend (with air hot reload if available, otherwise go run)
 dev-be:
-    which air && air || go run .
+    which air && air --build.cmd "go build -o ./tmp/main ./cmd/event-sensor" --build.bin ./tmp/main || go run ./cmd/event-sensor
 
 # Run frontend dev server
 dev-fe:
@@ -46,7 +46,7 @@ check:
 
 # Generate SQLC code
 generate:
-    sqlc generate
+    sqlc generate -f db/sqlc.yaml
 
 # Run goose migrations manually
 migrate:
@@ -54,7 +54,7 @@ migrate:
 
 # Full production build: frontend + Go binary
 build: build-fe
-    CGO_ENABLED=0 go build -tags release -o event-sensor .
+    CGO_ENABLED=0 go build -tags release -o event-sensor ./cmd/event-sensor
 
 # Build Ticketmaster CLI tool
 tm-cli:
@@ -65,5 +65,5 @@ clean:
     rm -f event-sensor
     rm -f tm-cli
     rm -rf data
-    rm -rf frontend/dist
+    rm -rf internal/spa/dist
     rm -rf frontend/node_modules
