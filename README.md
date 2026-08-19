@@ -16,7 +16,6 @@ backend, Vue 3 frontend embedded in the same binary.
 
 ```sh
 cp .env.example .env
-just build-fe      # once: the backend embeds frontend/dist, so it must exist
 just dev           # dev mode: Vite + HMR on :5173, API proxied to :8080
 ```
 

@@ -30,7 +30,7 @@ migrate:
 
 # Full production build: frontend + Go binary
 build: build-fe
-    CGO_ENABLED=0 go build -o event-sensor .
+    CGO_ENABLED=0 go build -tags release -o event-sensor .
 
 # Build Ticketmaster CLI tool
 tm-cli:

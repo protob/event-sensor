@@ -12,6 +12,7 @@ go.work.sum
 
 # Binary
 event-sensor
+tm-cli
 
 # Database (runtime state; DB_PATH defaults to data/)
 data/
@@ -31,6 +32,20 @@ logs/
 # Frontend
 frontend/dist/
 frontend/node_modules/
+
+# Tests (coverage lands in *.out above)
+coverage.html
+e2e/node_modules/
+e2e/test-results/
+e2e/playwright-report/
+e2e/blob-report/
+e2e/.cache/
+playwright/.cache/
+
+# Nix
+result
+result-*
+.direnv/
 
 # IDE
 .idea/

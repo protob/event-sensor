@@ -25,8 +25,9 @@ just tm-cli      # build the Ticketmaster debug CLI
 Checks: `go build ./...`, `go test ./...`, and in `frontend/`: `bun run type-check`,
 `bun run lint`, `bun run format`.
 
-`main.go` embeds `frontend/dist/*`, so **the Go build fails on a clean tree until
-`just build-fe` has run at least once**.
+The SPA embed is behind the `release` build tag (`embed_dev.go` / `embed_release.go`),
+so a clean tree builds and tests without a frontend. `just build` passes `-tags release`
+and embeds `frontend/dist`; a binary built without the tag serves a notice page at `/`.
 
 ## Layout
 

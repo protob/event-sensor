@@ -25,9 +25,6 @@ import (
 	"github.com/protob/event-sensor/internal/config"
 )
 
-//go:embed frontend/dist/*
-var frontendFS embed.FS
-
 //go:embed db/migrations/*.sql
 var migrationsFS embed.FS
 
@@ -122,9 +119,9 @@ func main() {
 	})
 
 	// Serve embedded frontend (SPA fallback)
-	frontendDist, err := fs.Sub(frontendFS, "frontend/dist")
+	frontendDist, err := frontendFS()
 	if err != nil {
-		log.Fatalf("failed to get frontend sub-filesystem: %v", err)
+		log.Fatalf("failed to load embedded frontend: %v", err)
 	}
 	fileServer := http.FileServer(http.FS(frontendDist))
 	r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
