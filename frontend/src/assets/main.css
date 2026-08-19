@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+/* Dark = default. Light overrides via html.light (see useTheme). */
+@custom-variant light (&:where(.light, .light *));
+
+/* Coarse-pointer media query: a touch target needs to be larger than a cursor one.
+   `touch:` lets a component opt into a touch-only adjustment where a blanket rule
+   would be wrong. */
+@custom-variant touch (@media (pointer: coarse));
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  /* Density scale. Fixed px below `prose` on purpose - metadata density is the point of
+     this UI and must not grow with the viewport. `prose` is the one that flexes, because it
+     is the only size whole sentences are read at. The ceiling is 13.5px: this is a tool.
+     Named `prose`, not `body`, because --color-body already claims the `text-body` utility;
+     a --text-body token would be shadowed by it and silently do nothing. */
+  --text-micro: 9px;
+  --text-meta: 10px;
+  --text-label: 11px;
+  --text-prose: clamp(12px, 0.75rem + 0.15vw, 13.5px);
+
+  /* Page gutter: tight on a phone, comfortable on a desktop, one name. Every element that
+     defines a page edge uses this and nothing else - misalignment reads from four pixels,
+     which is what a stray px-3 next to a px-4 costs. Add a page edge, use `px-gutter`;
+     do not reach for a number. */
+  --spacing-gutter: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+
+  /* The width at which the category tree stops being a column and becomes a drawer: below it
+     a 280px sidebar leaves the table nothing. It sits between `md` and `lg` and it is its own
+     breakpoint because it describes one pane, not the page - naming it keeps the six
+     utilities that have to agree on the number from drifting apart. */
+  --breakpoint-tree: 56.25rem;
+
+  /* Map every semantic color to a runtime CSS var so it swaps by theme.
+     Tailwind generates the bg, text and border utilities from these names. */
+  --color-app: var(--c-app);
+  --color-surface: var(--c-surface);
+  --color-surface-2: var(--c-surface-2);
+  --color-surface-3: var(--c-surface-3);
+  --color-surface-sel: var(--c-surface-sel);
+  --color-line: var(--c-line);
+  --color-line-2: var(--c-line-2);
+  --color-heading: var(--c-heading);
+  --color-body: var(--c-body);
+  --color-muted: var(--c-muted);
+  --color-faint: var(--c-faint);
+  --color-ghost: var(--c-ghost);
+  --color-accent: var(--c-accent);
+  --color-accent-bright: var(--c-accent-bright);
+  --color-accent-text: var(--c-accent-text);
+  --color-accent-chip: var(--c-accent-chip);
+  --color-accent-chip-border: var(--c-accent-chip-border);
+  --color-accent-strong: var(--c-accent-strong);
+  --color-go: var(--c-go);
+  --color-go-chip: var(--c-go-chip);
+  --color-go-chip-border: var(--c-go-chip-border);
+  --color-danger: var(--c-danger);
+  --color-danger-chip: var(--c-danger-chip);
+  --color-danger-chip-border: var(--c-danger-chip-border);
+  --color-ok-bg: var(--c-ok-bg);
+  --color-ok-border: var(--c-ok-border);
+  --color-ok-text: var(--c-ok-text);
+}
+
+/* DARK (default) */
+:root {
+  /* Neutrals are OKLCH literals, not a derived ramp. The lightness steps are deliberately
+     uneven - .13 .145 .16 .17 then a jump to .2 - so the four near-blacks read as barely
+     separable depth while the lines stay legible against them. A ramp would even them out
+     and flatten exactly that. */
+  --c-app: oklch(0.13 0 0);
+  --c-surface: oklch(0.145 0 0);
+  --c-surface-2: oklch(0.16 0 0);
+  --c-surface-3: oklch(0.17 0 0);
+  /* The selected-row surface is not a neutral - it is the accent at surface lightness, which
+     is exactly why a selected row reads as selected. Derive it so it tracks the accent. */
+  --c-surface-sel: oklch(from var(--c-accent) 0.169 0.025 calc(h + 2));
+  --c-line: oklch(0.2 0 0);
+  --c-line-2: oklch(0.235 0 0);
+  --c-heading: oklch(0.955 0 0);
+  --c-body: oklch(0.858 0 0);
+  --c-muted: oklch(0.754 0 0);
+  --c-faint: oklch(0.573 0 0);
+  --c-ghost: oklch(0.667 0 0);
+  /* One base per accent role; every variant derives from it. Change the base and the bright,
+     text, chip, border and strong values follow. Lightness and chroma are literal where the
+     variant is a tint of the surface rather than a shift of the accent; the hue is always
+     derived, because the hue is the identity. Small hue offsets are deliberate off-hue
+     choices, not drift. */
+  --c-accent: oklch(0.546 0.215 263);
+  --c-accent-bright: oklch(from var(--c-accent) calc(l + 0.08) calc(c - 0.027) calc(h - 3));
+  --c-accent-text: oklch(from var(--c-accent) calc(l + 0.168) calc(c - 0.072) calc(h - 8));
+  --c-accent-chip: oklch(from var(--c-accent) 0.218 0.048 calc(h - 4));
+  --c-accent-chip-border: oklch(from var(--c-accent) 0.424 0.181 calc(h + 3));
+  --c-accent-strong: oklch(from var(--c-accent) 0.379 0.138 calc(h + 3));
+  --c-go: oklch(0.773 0.153 163);
+  /* The go chips sit 19deg off the mint base - an olive green, not a desaturated mint. */
+  --c-go-chip: oklch(from var(--c-go) 0.265 0.036 calc(h - 19));
+  --c-go-chip-border: oklch(from var(--c-go) 0.375 0.066 calc(h - 19));
+  --c-danger: oklch(0.711 0.166 22);
+  --c-danger-chip: oklch(from var(--c-danger) 0.164 0.032 calc(h - 1));
+  --c-danger-chip-border: oklch(from var(--c-danger) 0.322 0.094 calc(h + 2));
+  /* The "ok" band is its own green role, distinct from --c-go: go is a claim state, ok is a
+     result. Same shape though - the saturated text colour is the base, bg and border derive. */
+  --c-ok-text: oklch(0.8 0.182 152);
+  --c-ok-bg: oklch(from var(--c-ok-text) 0.18 0.03 calc(h - 8));
+  --c-ok-border: oklch(from var(--c-ok-text) 0.315 0.067 calc(h - 8));
+  color-scheme: dark;
+}
+
+/* LIGHT */
+:root.light {
+  /* The light neutrals are not grey: every one of them carries a slight cool cast at hue 286,
+     deepening as they darken. Keep the hue consistent when adding a step. */
+  --c-app: oklch(0.973 0.001 286);
+  --c-surface: oklch(1 0 0);
+  --c-surface-2: oklch(0.96 0.0027 286);
+  --c-surface-3: oklch(0.938 0.005 286);
+  --c-surface-sel: oklch(from var(--c-accent) 0.966 0.016 h);
+  --c-line: oklch(0.914 0.005 286);
+  --c-line-2: oklch(0.872 0.008 286);
+  --c-heading: oklch(0.18 0.006 286);
+  --c-body: oklch(0.296 0.013 286);
+  --c-muted: oklch(0.472 0.02 286);
+  --c-faint: oklch(0.69 0.017 286);
+  --c-ghost: oklch(0.773 0.014 286);
+  /* Light only redeclares what genuinely differs. --c-accent and --c-accent-bright are the
+     same in both themes, so the dark declarations still apply. The chips invert: light
+     wants a pale tint of the hue where dark wants a near-black one. */
+  --c-accent-text: var(--c-accent);
+  --c-accent-chip: oklch(from var(--c-accent) 0.932 0.032 calc(h - 7));
+  --c-accent-chip-border: oklch(from var(--c-accent) 0.809 0.096 calc(h - 11));
+  --c-accent-strong: oklch(from var(--c-accent) 0.882 0.057 calc(h - 9));
+  --c-go: oklch(0.596 0.127 163);
+  --c-go-chip: oklch(from var(--c-go) 0.944 0.038 calc(h + 2));
+  --c-go-chip-border: oklch(from var(--c-go) 0.852 0.083 calc(h + 1));
+  --c-danger: oklch(0.577 0.215 27);
+  --c-danger-chip: oklch(from var(--c-danger) 0.935 0.03 calc(h - 9));
+  --c-danger-chip-border: oklch(from var(--c-danger) 0.784 0.096 calc(h - 8));
+  --c-ok-text: oklch(0.574 0.16 143);
+  --c-ok-bg: oklch(from var(--c-ok-text) 0.96 0.027 calc(h + 2));
+  --c-ok-border: oklch(from var(--c-ok-text) 0.816 0.098 calc(h + 2));
+  color-scheme: light;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+body {
+  margin: 0;
+  /* Below 320px the layout stops yielding and the page scrolls instead. Nothing real is this
+     narrow - this is the floor that keeps fluid sizing from degrading without limit. */
+  min-width: 320px;
+  background: var(--color-app);
+  color: var(--color-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* iOS zooms the viewport when a focused input computes below 16px, and every input here is
+   12px or smaller. Raise it only where that behaviour exists - a coarse pointer - so the
+   desktop keeps its density. */
+@media (pointer: coarse) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* 44px is the touch floor; the icon buttons in this app are 20-24px. Rather than resize them
+     and lose the density everywhere, give each one an invisible pseudo-element that catches the
+     finger. The element keeps its box, so nothing reflows.
+
+     Where two of these sit closer than 44px apart the areas overlap, and the later element in
+     source order wins the contested strip. That is the reason the destructive control is either
+     last in its cluster or spaced away from its neighbour - see the `touch:ml-*` in the row
+     action clusters. Check source order before adding a button next to a delete. */
+  button,
+  [role="button"],
+  a[href] {
+    position: relative;
+  }
+
+  button::after,
+  [role="button"]::after,
+  a[href]::after {
+    content: "";
+    position: absolute;
+    inset: 50% auto auto 50%;
+    translate: -50% -50%;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* A checkbox is a replaced element and renders no ::after, so it cannot be given a pseudo
+     hit area - it only gets to be bigger. 18px against the native ~13px. */
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* thin, tool-like scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-2) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-line-2);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
