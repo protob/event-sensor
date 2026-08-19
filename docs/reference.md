@@ -6,6 +6,7 @@ Ticketmaster fetch pipeline, the UI pages, and development.
 ## Contents
 
 - [Data model](#data-model)
+- [Startup and bind address](#startup-and-bind-address)
 - [API](#api)
 - [Ticketmaster pipeline](#ticketmaster-pipeline)
 - [UI pages](#ui-pages)
@@ -43,6 +44,17 @@ How things are meant to work:
   events shows as dormant.
 - **Names are stored as typed.** - verbatim,
   display included.
+
+## Startup and bind address
+
+Startup behavior depends on the bind address. On loopback (development) everything stays
+open. On a non-loopback bind the server:
+
+- refuses to start while `JWT_SECRET` is the public default
+- warns while any account still uses the seeded password
+- requires authentication for the reads that are public in development
+- refuses password reset until the seeded password is changed, since username and email
+  are both public in this repository
 
 ## API
 
