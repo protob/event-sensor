@@ -39,3 +39,8 @@ src/
 
 `api/` is imported only by `stores/` — views and components read stores, never make
 requests themselves.
+
+## Tests
+
+`bun test` runs the unit tests in `src/__tests__/` - pure functions only. Components are
+covered by the browser suite in `../e2e/`, which locates elements by `data-testid`.

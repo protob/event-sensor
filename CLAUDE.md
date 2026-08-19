@@ -27,7 +27,8 @@ just tm-cli      # build the Ticketmaster debug CLI
 ```
 
 Checks: `go build ./...`, `go test ./...`, and in `frontend/`: `bun run type-check`,
-`bun run lint`, `bun run format`.
+`bun run lint`, `bun run format`. `just check` runs all of them, and `just test-all`
+adds the browser suite.
 
 The SPA embed is behind the `release` build tag (`embed_dev.go` / `embed_release.go`),
 so a clean tree builds and tests without a frontend. `just build` passes `-tags release`
@@ -46,6 +47,8 @@ db/sqlc/         generated Go — never edit by hand
 internal/        auth, config, reconcile, provider seam, uuid
 ticketmaster/    TM client + parser (junk/region filters, artist match, dedup)
 frontend/        Vue 3 SPA (see frontend/README.md)
+tests/integration/ router + SQLite, no mocks
+e2e/             Playwright specs + the Ticketmaster stub server
 docs/reference.md  data model, full endpoint list, pipeline, UI pages
 ```
 
@@ -95,6 +98,12 @@ A change that breaks one of these is a bug, not a refactor.
   account is seeded by migration 003. There is no registration endpoint: this is
   single-user software, and a second user runs a second instance. Ids are
   `internal/uuid.New()`.
+- **Tests** live in `tests/integration/` (whole router against a temporary SQLite file),
+  `ticketmaster/` (pipeline against recorded fixtures) and `e2e/` (browser, against the
+  release binary). A new endpoint gets an integration test when it carries one of the
+  invariants above; a plain CRUD passthrough does not. Nothing mocks the database or the
+  HTTP layer, and no production code exists only to be testable, apart from the
+  `TM_BASE_URL` override.
 - **Bind-dependent posture**: loopback keeps read endpoints public (browse before login);
   a non-loopback bind moves them behind auth, refuses to start on the default
   `JWT_SECRET`, warns about seeded passwords, and blocks password reset until the seeded
@@ -118,6 +127,8 @@ A change that breaks one of these is a bug, not a refactor.
   the fixed density scale in `assets/main.css` — no ad-hoc hex values or one-off spacing.
 - The UI is dense and keyboard-first: Shift-click ranges, `Cmd/Ctrl+A` select,
   `Esc` clear/close, `n` quick-add. New list views must support the same bindings.
+- Elements the browser suite drives carry a `data-testid`; the specs in `e2e/` locate by
+  nothing else. Renaming or removing one is a change to `e2e/`, not only to a template.
 - `types/` mirrors the wire format; keep it in step with the Huma request/response types
   in `api/types.go`.
 
@@ -132,8 +143,9 @@ to determine why the pipeline kept or dropped an event:
 ./tm-cli search "Artist Name" -j      # raw JSON
 ```
 
-Parser behavior is covered by `ticketmaster/parser_test.go`; filter and matching changes
-belong there.
+Parser behavior is covered by `ticketmaster/parser_test.go` (dedup and match
+classification) and `ticketmaster/adapter_test.go` (the whole pipeline against recorded
+responses). Filter and matching changes belong in one of the two.
 
 ## Config
 

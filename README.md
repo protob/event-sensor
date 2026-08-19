@@ -14,8 +14,7 @@ backend, Vue 3 frontend embedded in the same binary.
 
 `just`, `go` and `bun` are the prerequisites.
 
-On NixOS, `nix develop` supplies the Go and SQL tooling and a Playwright whose browsers
-actually run; `bun` and `node` come from the system.
+On NixOS, `nix develop` supplies the Go and SQL tooling and Playwright;
 
 ```sh
 cp .env.example .env
@@ -34,20 +33,23 @@ just build && ./event-sensor
 The binary serves the SPA at `/`, with a fallback to `index.html` for client-side
 routing.
 
+Tests: `just test` (Go), `just test-fe` (frontend units), `just e2e` (browser, needs
+`nix develop`), or `just test-all` for all three.
+
 ## Configuration
 
 Configuration is read from environment variables. The Ticketmaster key is the
 exception: the key from agenix is read first, and `TICKETMASTER_API_KEY`
 is the fallback.
 
-| Variable               | Default                           | Meaning                                         |
-| ---------------------- | --------------------------------- | ----------------------------------------------- |
-| `ES_BIND`              | `127.0.0.1`                       | Listen address; put Caddy in front for TLS      |
-| `PORT`                 | `8080`                            | Listen port                                     |
-| `DB_PATH`              | `data/event-sensor.db`            | SQLite path; parent dir created on start (0700) |
-| `TICKETMASTER_API_KEY` | (empty)                           | Server-wide TM key                              |
+| Variable               | Default                           | Meaning                                                  |
+| ---------------------- | --------------------------------- | -------------------------------------------------------- |
+| `ES_BIND`              | `127.0.0.1`                       | Listen address; put Caddy in front for TLS               |
+| `PORT`                 | `8080`                            | Listen port                                              |
+| `DB_PATH`              | `data/event-sensor.db`            | SQLite path; parent dir created on start (0700)          |
+| `TICKETMASTER_API_KEY` | (empty)                           | Server-wide TM key                                       |
 | `TM_BASE_URL`          | (empty)                           | Ticketmaster endpoint override; empty means the real API |
-| `JWT_SECRET`           | `dev-secret-change-in-production` | JWT signing secret                              |
+| `JWT_SECRET`           | `dev-secret-change-in-production` | JWT signing secret                                       |
 
 ## Deployment
 

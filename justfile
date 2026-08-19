@@ -35,6 +35,15 @@ e2e:
 # Go, frontend units, browser
 test-all: test test-fe e2e
 
+# Everything that can fail before a commit, minus the browser suite
+check:
+    go build ./...
+    go vet ./...
+    go test ./...
+    cd frontend && bun run type-check
+    cd frontend && bun run lint
+    cd frontend && bun test
+
 # Generate SQLC code
 generate:
     sqlc generate

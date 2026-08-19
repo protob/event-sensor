@@ -62,8 +62,8 @@ OpenAPI spec at `/openapi.json` when running.
 
 **Public**
 
-- `POST /api/auth/register` - register
 - `POST /api/auth/login` - login
+- `POST /api/auth/reset-password` - reset by username and email
 - `GET  /api/artists` - list artists
 - `GET  /api/artists/{id}/events` - artist event list
 - `GET  /api/events` - list events (`start_date`, `end_date`, `q` params)
@@ -186,6 +186,8 @@ db/sqlc/        generated Go code
 internal/       auth, config, reconcile, provider seam, uuid
 ticketmaster/   TM client + parser (filters, matching, dedup)
 frontend/       Vue 3 SPA (see frontend/README.md)
+tests/          Go integration tests
+e2e/            Playwright specs + the Ticketmaster stub server
 ```
 
 `tm-cli` is a small helper for looking at raw TM API responses - handy when a fetch
@@ -197,3 +199,24 @@ structure on the fly:
 ./tm-cli search "Artist Name" -p -d     # -p: no parking, -d: no duplicates
 ./tm-cli search "Artist Name" -j        # raw JSON
 ```
+
+### Tests
+
+| Layer | Location | Command |
+| --- | --- | --- |
+| Go integration | `tests/integration/` | `just test` |
+| Ticketmaster pipeline | `ticketmaster/` | `go test ./ticketmaster/` |
+| Frontend units | `frontend/src/__tests__/` | `just test-fe` |
+| Browser | `e2e/` | `just e2e` (inside `nix develop`) |
+
+The integration tests run the real router against a real SQLite file in a temporary
+directory; there are no mocks. The Ticketmaster API is replaced at one point only: the
+client's base URL, set through `TM_BASE_URL`, pointed at a server serving recorded
+responses from `ticketmaster/testdata/`.
+
+Fixtures are recorded with `./tm-cli search "Artist" -j`, with the API key removed and
+absolute dates replaced by tokens (`{{+30d}}`, `{{-10d}}`, `{{+45dT}}` for a value with
+a time part) so a fixture never expires.
+
+The browser suite drives the release binary with the SPA embedded, on a temporary
+database, with `e2e/tmstub` in place of Ticketmaster. Locators use `data-testid` only.
