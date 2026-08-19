@@ -4,7 +4,20 @@ import (
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humachi"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
+
+// Mount registers the API under /api with the middleware the binary runs. main.go adds
+// the request logger and the SPA fallback around it.
+func Mount(r chi.Router, h *Handler) {
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.RequestID)
+	r.Use(BodyLimit(1 << 20))
+
+	r.Route("/api", func(r chi.Router) {
+		SetupRouter(r, h)
+	})
+}
 
 // SetupRouter creates the Huma API and registers all routes.
 func SetupRouter(r chi.Router, h *Handler) huma.API {

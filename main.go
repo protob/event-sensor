@@ -88,14 +88,7 @@ func main() {
 	// Setup router
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	r.Use(middleware.Recoverer)
-	r.Use(middleware.RequestID)
-	r.Use(api.BodyLimit(1<<20))
-
-	// Mount API routes
-	r.Route("/api", func(r chi.Router) {
-		api.SetupRouter(r, handler)
-	})
+	api.Mount(r, handler)
 
 	// Serve embedded frontend (SPA fallback)
 	frontendDist, err := frontendFS()

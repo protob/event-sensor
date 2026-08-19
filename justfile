@@ -20,6 +20,10 @@ dev:
 build-fe:
     cd frontend && bun install && bun run build
 
+# Run Go tests
+test:
+    go test ./...
+
 # Generate SQLC code
 generate:
     sqlc generate
