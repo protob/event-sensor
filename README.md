@@ -14,6 +14,9 @@ backend, Vue 3 frontend embedded in the same binary.
 
 `just`, `go` and `bun` are the prerequisites.
 
+On NixOS, `nix develop` supplies the Go and SQL tooling and a Playwright whose browsers
+actually run; `bun` and `node` come from the system.
+
 ```sh
 cp .env.example .env
 just dev           # dev mode: Vite + HMR on :5173, API proxied to :8080

@@ -11,6 +11,10 @@ Module path: `github.com/protob/event-sensor`.
 
 Everything goes through the [justfile](justfile) (`just` with no argument lists recipes).
 
+`nix develop` enters a shell with go, gopls, sqlc, goose, air, just, sqlite and
+Playwright; bun and node are expected on the host and are never packaged here.
+`PLAYWRIGHT_BROWSERS_PATH` is set in the shell, so browsers are never downloaded.
+
 ```sh
 just dev         # backend + Vite (HMR on :5173, /api proxied to :8080), one Ctrl-C
 just dev-be      # backend only (air if installed, else go run)
