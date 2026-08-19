@@ -213,15 +213,22 @@ func (a *testApp) claimStatus(eventID string) string {
 	return ""
 }
 
+// countRows reads a single count straight from the database, for the rows no endpoint
+// exposes.
+func (a *testApp) countRows(query string, args ...any) int {
+	a.t.Helper()
+	var n int
+	if err := a.conn.QueryRow(query, args...).Scan(&n); err != nil {
+		a.t.Fatalf("query %q: %v", query, err)
+	}
+	return n
+}
+
 // eventExists reports whether an event id is still in the store, without going through
 // the list endpoint's filters.
 func (a *testApp) eventExists(id string) bool {
 	a.t.Helper()
-	var n int
-	if err := a.conn.QueryRow(`SELECT count(*) FROM events WHERE id = ?`, id).Scan(&n); err != nil {
-		a.t.Fatalf("count events: %v", err)
-	}
-	return n == 1
+	return a.countRows(`SELECT count(*) FROM events WHERE id = ?`, id) == 1
 }
 
 // fetch runs a reconcile for one artist and returns the counters.
