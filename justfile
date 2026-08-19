@@ -1,0 +1,45 @@
+# Run Go backend (with air hot reload if available, otherwise go run)
+dev-be:
+    which air && air || go run .
+
+# Run frontend dev server
+dev-fe:
+    cd frontend && bun run dev
+
+# Run backend and frontend together (dev mode: Vite on :5173, API proxied to :8080)
+dev:
+    #!/usr/bin/env bash
+    set -e
+    echo "Dev mode: frontend on http://localhost:5173 (HMR), API proxied to :8080..."
+    trap 'kill 0' INT TERM EXIT
+    just dev-be &
+    just dev-fe &
+    wait
+
+# Build frontend for production
+build-fe:
+    cd frontend && bun install && bun run build
+
+# Generate SQLC code
+generate:
+    sqlc generate
+
+# Run goose migrations manually
+migrate:
+    goose -dir db/migrations sqlite3 data/event-sensor.db up
+
+# Full production build: frontend + Go binary
+build: build-fe
+    CGO_ENABLED=0 go build -o event-sensor .
+
+# Build Ticketmaster CLI tool
+tm-cli:
+    go build -o tm-cli ./cmd/tm-cli
+
+# Remove build artifacts
+clean:
+    rm -f event-sensor
+    rm -f tm-cli
+    rm -rf data
+    rm -rf frontend/dist
+    rm -rf frontend/node_modules
