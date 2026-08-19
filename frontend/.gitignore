@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# bun is the package manager (README); npm's lockfile is a local byproduct only
+package-lock.json
+
+# compiled vite config byproducts - vite.config.ts is the source of truth
+vite.config.js
+vite.config.d.ts
+
+# Test coverage
+coverage/
+
+# Cache
+.cache/
+.vite/
